@@ -1,61 +1,44 @@
 using System;
 using System.Diagnostics;
+using BatteryCharging;
 
-class BatteryChargingFactors
+namespace BatteryCharging
 {
-    /// <summary>
-    /// This class contains the factors and conditions for lithium ion (Li-ion) battery charging.
-    /// </summary>
-    static bool IsBatteryCharging(float chargingTemperature_Celsius, float stateOfCharge_percentage, float chargeRate)
+    public class Checker
     {
-        bool IstemperatureCorrect = CheckChargingTemperature(chargingTemperature_Celsius);
-        bool IsstateofChargeCorrect = CheckStateOfCharge(stateOfCharge_percentage);
-        bool IschargeRateCorrect = CheckChargeRate(chargeRate);
-        return (IstemperatureCorrect && IsstateofChargeCorrect && IschargeRateCorrect);
-    }
-     static bool CheckChargingTemperature(float chargingTemperature_Celsius)
-    {
-        if (chargingTemperature_Celsius < 0 || chargingTemperature_Celsius > 45)
+       static bool IsBatteryCharging(float chargingTemperature_Celsius, float stateOfCharge_percentage, float chargeRate)
         {
-            Console.WriteLine("Temperature is out of range!");
-            return false;
+            bool IstemperatureCorrect = BatteryChargingFactors.CheckChargingTemperature(chargingTemperature_Celsius);
+            bool IsstateofChargeCorrect = BatteryChargingFactors.CheckStateOfCharge(stateOfCharge_percentage);
+            bool IschargeRateCorrect = BatteryChargingFactors.CheckChargeRate(chargeRate);
+            return (IstemperatureCorrect && IsstateofChargeCorrect && IschargeRateCorrect);
         }
-        return true;
-    }
-     static bool CheckStateOfCharge(float stateOfCharge_percentage)
-    {
-        if (stateOfCharge_percentage < 20 || stateOfCharge_percentage > 80)
+       static void ExpectResult(bool expression, string expectresult)
         {
-            Console.WriteLine("State of Charge is out of range!");
-            return false;
+            switch (expectresult)
+            {
+                case "ExpectTrue":
+                    if (!expression)
+                    {
+                        Console.WriteLine("Expected true, but got false");
+                        Environment.Exit(1);
+                    }
+                    break;
+                case "ExpectFalse":
+                    if (expression)
+                    {
+                        Console.WriteLine("Expected false, but got true");
+                        Environment.Exit(1);
+                    }
+                    break;
+            }
         }
-        return true;
-    }
-     static bool CheckChargeRate(float chargeRate)
-    {
-        if (chargeRate > 0.8)
+        static int Main()
         {
-            Console.WriteLine("Charge Rate is out of range!");
-            return false;
+            ExpectResult(IsBatteryCharging(25, 70, 0.7f), "ExpectTrue");
+            ExpectResult(IsBatteryCharging(50, 85, 0.0f), "ExpectFalse");
+            Console.WriteLine("All ok");
+            return 0;
         }
-        return true;
-    }
-    static void ExpectTrue(bool expression) {
-        if(!expression) {
-            Console.WriteLine("Expected true, but got false");
-            Environment.Exit(1);
-        }
-    }
-    static void ExpectFalse(bool expression) {
-        if(expression) {
-            Console.WriteLine("Expected false, but got true");
-            Environment.Exit(1);
-        }
-    }
-    static int Main() {
-        ExpectTrue(IsBatteryCharging(25, 70, 0.7f));
-        ExpectFalse(IsBatteryCharging(50, 85, 0.0f));
-        Console.WriteLine("All ok");
-        return 0;
     }
 }
