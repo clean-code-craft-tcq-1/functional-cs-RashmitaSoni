@@ -5,44 +5,23 @@ namespace BatteryCharging
 {
     public class BatteryChargingFactors
     {
-        /// <summary>
-        /// This class contains the factors and conditions for lithium ion (Li-ion) battery charging.
-        /// </summary>
         static float minimumChargingTemprature_Celsius = 0;
         static float maximumChargingTemprature_Celsius = 45;
         static float minimumStateOfCharge_Percentage = 20;
         static float maximumStateOfCharge_Percentage = 80;
+        static float minimumChargeRate = 0.3f;
         static float maximumChargeRate = 0.8f;
-        public static bool CheckChargingTemperature(float chargingTemperature_Celsius)
+        public static void CheckChargingTemperature(float chargingTemperature_Celsius)
         {
-            if (chargingTemperature_Celsius < minimumChargingTemprature_Celsius || chargingTemperature_Celsius > maximumChargingTemprature_Celsius)
-            {
-                DisplayConditionOutcome("Charging Temperature");
-                return false;
-            }
-            return true;
+            BatteryAbnormalConditions.CheckBreachingPoint("Charging Temperature", chargingTemperature_Celsius, minimumChargingTemprature_Celsius, maximumChargingTemprature_Celsius);
         }
-        public static bool CheckStateOfCharge(float stateOfCharge_percentage)
+        public static void CheckChargeRate(float chargeRate)
         {
-            if (stateOfCharge_percentage < minimumStateOfCharge_Percentage || stateOfCharge_percentage > maximumStateOfCharge_Percentage) 
-            {
-                DisplayConditionOutcome("State of Charge");
-                return false;
-            }
-            return true;
+            BatteryAbnormalConditions.CheckBreachingPoint("Charge Rate", chargeRate, minimumChargeRate, maximumChargeRate);
         }
-        public static bool CheckChargeRate(float chargeRate)
+        public static void CheckStateOfCharge(float stateOfCharge_percentage)
         {
-            if (chargeRate > maximumChargeRate)
-            {
-                DisplayConditionOutcome("Charge Rate");
-                return false;
-            }
-            return true;
-        }
-        public static void DisplayConditionOutcome(string factorName)
-        {
-            Console.WriteLine("{0} is out of range!",factorName);
+            BatteryAbnormalConditions.CheckBreachingPoint("State of Charge", stateOfCharge_percentage, minimumStateOfCharge_Percentage, maximumStateOfCharge_Percentage);
         }
     }
 }
