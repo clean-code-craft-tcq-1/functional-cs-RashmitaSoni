@@ -15,9 +15,9 @@ namespace BatteryCharging
         {
             BatteryAbnormalConditions.CheckBreachingPoint("Charging Temperature", chargingTemperature_Celsius, minimumChargingTemprature_Celsius, maximumChargingTemprature_Celsius);
         }
-        public static void CheckChargeRate(float chargeRate)
+        public static void CheckChargeRate(float chargeRate_CRate)
         {
-            BatteryAbnormalConditions.CheckBreachingPoint("Charge Rate", chargeRate, minimumChargeRate_CRate, maximumChargeRate_CRate);
+            BatteryAbnormalConditions.CheckBreachingPoint("Charge Rate", chargeRate_CRate, minimumChargeRate_CRate, maximumChargeRate_CRate);
         }
         public static void CheckStateOfCharge(float stateOfCharge_percentage)
         {
