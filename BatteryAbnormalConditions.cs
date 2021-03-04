@@ -25,7 +25,7 @@ namespace BatteryCharging
         {
             Console.WriteLine("{0} is out of range!\nRange is ({1},{2})\n{3}",factorName,minimumFactorLimit,maximumFactorLimit,breachPoint);
         }
-        public static bool GetBatteryStatus()
+        public static bool GetBatteryFaultyStatus()
         {
             return FaultyBattery;
         }
