@@ -9,7 +9,6 @@ namespace BatteryCharging
         {
             BatteryChargingTest.BatteryChargingTestFactors(25, 70, 0.7f);
             BatteryChargingTest.BatteryChargingTestFactors(50, 85, 0.0f);
-            Console.WriteLine("All ok");
             return 0;
         }
     }
