@@ -27,7 +27,8 @@ namespace BatteryCharging
         }
         public static bool GetBatteryFaultyStatus()
         {
-            return FaultyBattery;
+            bool faultyBattery = FaultyBattery;
+            return faultyBattery;
         }
     }
 }
