@@ -5,30 +5,34 @@ namespace BatteryCharging
 {
     public class BatteryAbnormalConditions
     {
-        static readonly string LowBreach = "Breaching Point is Low";
-        static readonly string HighBreach = "Breaching Point is High";
-        static bool FaultyBattery = false;
-        public static void CheckBreachingPoint(string factorName, float factorValue, float minimumFactorLimit, float maximumFactorLimit)
-        { 
-            if (factorValue < minimumFactorLimit)
-            {
-                DisplayAbnormalConditions(factorName, minimumFactorLimit, maximumFactorLimit,LowBreach);
-                FaultyBattery = true;
-            }
-            if (factorValue > maximumFactorLimit)
-            {
-                DisplayAbnormalConditions(factorName, minimumFactorLimit, maximumFactorLimit,HighBreach);
-                FaultyBattery = true;
-            }
-        }
-        public static void DisplayAbnormalConditions(string factorName, float minimumFactorLimit, float maximumFactorLimit, string breachPoint)
+        public static bool CheckChargingFactors(string factorName, float factorValue, float minFactorLimit, float maxFactorLimit)
         {
-            Console.WriteLine("{0} is out of range!\nRange is ({1},{2})\n{3}",factorName,minimumFactorLimit,maximumFactorLimit,breachPoint);
+            if(IsLowBreahingPoint(factorValue, minFactorLimit) || IsHighBreahingPoint(factorValue, maxFactorLimit))
+            {
+                DisplayAbnormalConditions(factorName);
+                return true;
+            }
+            return false;
         }
-        public static bool GetBatteryFaultyStatus()
+        public static bool IsLowBreahingPoint(float factorValue, float FactorLimit)
         {
-            bool faultyBattery = FaultyBattery;
-            return faultyBattery;
+            if (factorValue < FactorLimit)
+            {
+                return true;
+            }
+            return false;
+        }
+        public static bool IsHighBreahingPoint(float factorValue, float FactorLimit)
+        {
+            if (factorValue > FactorLimit)
+            {
+                return true;
+            }
+            return false;
+        }
+        public static void DisplayAbnormalConditions(string factorName)
+        {
+            Console.WriteLine("{0} is out of range!",factorName);
         }
     }
 }
